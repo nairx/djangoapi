@@ -1,15 +1,19 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
 from api.models import product
 from rest_framework import status
 from .serializers import ProductSerializer
+from rest_framework.permissions import IsAuthenticated 
+
 
 @api_view()
+@permission_classes((IsAuthenticated,))
 def getData(request):
     return Response({"message":"Hello World"})
 
+# @permission_classes((IsAuthenticated,))
 class ProductList(APIView):
     def get(self,request):
         products = product.objects.all()
